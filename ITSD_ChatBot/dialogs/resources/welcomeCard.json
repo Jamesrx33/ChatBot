@@ -1,0 +1,55 @@
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.0",
+  "body": [
+    {
+      "type": "Image",
+      "url": "https://github.com/DPR-Technology-Innovation-Prod1/BotTeamsAdoption/blob/master/IT%20Service%20Assistant.png?raw=true",
+      "size": "stretch"
+    },
+    {
+      "type": "TextBlock",
+      "spacing": "medium",
+      "size": "medium",
+      "weight": "bolder",
+      "text": "***Hi! I'm the ITService Assistant!***",
+      "wrap": true,
+      "maxLines": 0
+    },
+    {
+      "type": "TextBlock",
+      "size": "default",
+      "isSubtle": true,
+      "text": "I can help you find a solution to many common problems or get you in contact with IT Service. How can I assist you? \n\n ***Note**** You can type cancel to be returned to this menu.\n\n",
+      "wrap": true,
+      "maxLines": 0
+    }
+  ],
+  "actions": [
+    {
+      "type": "Action.Submit",
+      "title": "Contact ITService",
+      "data": {
+        "id": "Chat with IT"
+        }
+      
+    },
+    {
+      "type": "Action.Submit",
+      "title": "Request a license or access to an application",
+      "data": {
+        "id": "Access"
+        }
+      
+    },
+    {
+      "type": "Action.Submit",
+      "title": "Search for a solution to my problem",
+      "data": {
+        "id": "Solutions"
+        }
+      
+    }
+  ]
+}

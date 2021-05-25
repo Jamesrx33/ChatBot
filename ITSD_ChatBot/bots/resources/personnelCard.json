@@ -1,0 +1,93 @@
+
+{
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "type": "AdaptiveCard",
+    "version": "1.0",
+    "body": [
+      {
+        "type": "Container",
+        "items": [
+          {
+            "type": "TextBlock",
+            "text": "",
+            "weight": "bolder",
+            "size": "medium"
+          },
+          {
+            "type": "ColumnSet",
+            "columns": [
+              {
+                "type": "Column",
+                "width": "auto",
+                "items": [
+                  {
+                    "size": "small",
+                    "style": "person",
+                    "type": "Image",
+                    "url": "https://github.com/DPR-Technology-Innovation-Prod1/BotTeamsAdoption/blob/master/James%20Bell%20Headshot.png?raw=true"
+                  }
+                ]
+              },
+              {
+                "type": "Column",
+                "width": "stretch",
+                "items": [
+                  {
+                    "type": "TextBlock",
+                    "text": "AgentName",
+                    "weight": "bolder",
+                    "wrap": true
+                  },
+                  {
+                    "type": "TextBlock",
+                    "spacing": "none",
+                    "text": "With DPR since {{DATE(2018-07-10T06:08:39Z, SHORT)}}",
+                    "isSubtle": true,
+                    "wrap": true
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Container",
+        "items": [
+          {
+            "type": "TextBlock",
+            "text": "My name is James.\nYou can call me Games.\nJust not lames.",
+            "wrap": true
+          },
+          {
+            "type": "FactSet",
+            "facts": [
+              {
+                "title": "Title:",
+                "value": "Service Desk Analyst"
+              },
+              {
+                "title": "Status:",
+                "value": "Online"
+              },
+              {
+                "title": "Email:",
+                "value": "AgentEmail"
+              },
+              {
+                "title": "Reports to:",
+                "value": "Alexandra Monzo"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "actions": [
+      {
+          "type": "Action.OpenUrl",
+          "title": "Start a chat",
+          "url": "https://teams.microsoft.com/l/chat/0/0?users=ITService@dpr.com&topicName=New%20ITService%20Chat%20From%20Bot&message=Hello%2C%20I%20need%20assistance%20please"
+        }
+    ]
+}  
