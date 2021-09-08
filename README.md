@@ -1,5 +1,5 @@
 # **<p align="center">Chatbot</p>**
-## **<p align="center">A Microsoft BotFramwork Chat Bot hosted in Azure and written in Node.js</p>**
+## **<p align="center">A Microsoft BotFramework Chat Bot hosted in Azure and written in Node.js</p>**
 
 ---
 
