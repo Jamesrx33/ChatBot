@@ -1,4 +1,4 @@
-# **<p align="center">Chatbot</p>**
+# **<p align="center">ITService Assistant</p>**
 ## **<p align="center">A Microsoft BotFramework Chat Bot hosted in Azure and written in Node.js</p>**
 
 ---
