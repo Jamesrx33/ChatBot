@@ -759,7 +759,7 @@ async loadBalancer(ActivePersonnel){
   const BASE_URL = "https://dprconstruction.samanage.com/incidents?report_id=9288733&applied=true&assigned_to%5B%5D=1784743&assigned_to%5B%5D=3518814&assigned_to%5B%5D=3574680&assigned_to%5B%5D=4498568&assigned_to%5B%5D=5763508&created%5B%5D=1&121985%5B%5D=Chat&sort_by=number&sort_order=DESC&per_page=100&page=1"
   const Headers = {
       headers: {
-      "X-Samanage-Authorization": "Bearer U1dTRC1pZG1BUElAZHByLmNvbQ==:eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjo1Njk2Mzc5LCJnZW5lcmF0ZWRfYXQiOiIyMDIwLTA0LTI3IDE5OjE2OjAzIn0.Ndvz5eaeD1AFhl25kMh-8-buw0BuMUm1EhS9OWBYyNrCrM9KEnXaiAIH1z3Rx_LZHrlLrHC0IoBsZl6wc7qFMg",
+      "X-Samanage-Authorization": "Bearer TOKEN",
       "Accept": "application/json"
      }
   };
