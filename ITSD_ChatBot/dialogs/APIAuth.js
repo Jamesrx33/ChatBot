@@ -7,7 +7,7 @@ const { MSALAuthenticationProviderOptions } = require('@microsoft/microsoft-grap
 // An Optional options for initializing the MSAL @see https://github.com/AzureAD/microsoft-authentication-library-for-js/wiki/MSAL-basics#configuration-options
 const msalConfig = {
 	auth: {
-		clientId: "dac4ebbe-dfde-4487-80ce-0850f72034e3", // Client Id of the registered application
+		clientId: "CLIENTID", // Client Id of the registered application
 		redirectUri: "https://botteamsadoption.azurewebsites.net/Graph_Auth",
 	},
 };
