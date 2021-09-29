@@ -8,7 +8,7 @@ const axios = require("axios");
 
     const Config = {
         headers: {
-        "X-Samanage-Authorization": "Bearer c2FtYW5hZ2VfYXBpQGRwci5jb20=:eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxOTMxOTY0LCJnZW5lcmF0ZWRfYXQiOiIyMDIwLTEwLTA1IDIxOjA2OjAzIn0.69UK-OT6TBLKBuoMAGfmf8blKvK2i-XQgUZbhZCCKgfJhDCGEAlcmHx5ylYnUcBctD42wzMgRS818Q7GNrps5g",
+        "X-Samanage-Authorization": "Bearer TOKEN",
         "Accept": "application/xml",
         "Content-Type": "text/xml"
        },
