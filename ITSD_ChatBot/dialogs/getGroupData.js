@@ -7,7 +7,7 @@ function getGroupData() {
 
   const Headers = {
    headers: {
-   "X-Samanage-Authorization": "Bearer SmFtZXNCZUBkcHIuY29t:eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjozMzQ1Njc1LCJnZW5lcmF0ZWRfYXQiOiIyMDIwLTA0LTE2IDE3OjUzOjQ1In0.-4nMJ2AQQt1ESgif5VLzc4MBbck9QN0FUIBrPx4JXF9pyzPOX1KKQsR51eXJuHq6uHTyjSqfQnvuC9uKT6-QZQ",
+   "X-Samanage-Authorization": "Bearer TOKEN",
    "Accept": "application/json"
   }
 };
@@ -40,7 +40,7 @@ function getRecentIncident(){
 
   const Headers = {
     headers: {
-    "X-Samanage-Authorization": "Bearer SmFtZXNCZUBkcHIuY29t:eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjozMzQ1Njc1LCJnZW5lcmF0ZWRfYXQiOiIyMDIwLTA0LTE2IDE3OjUzOjQ1In0.-4nMJ2AQQt1ESgif5VLzc4MBbck9QN0FUIBrPx4JXF9pyzPOX1KKQsR51eXJuHq6uHTyjSqfQnvuC9uKT6-QZQ",
+    "X-Samanage-Authorization": "Bearer TOKEN",
     "Accept": "application/json"
    }
 };
