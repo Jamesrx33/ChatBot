@@ -205,13 +205,6 @@ class MainDialog extends ComponentDialog {
     }
 
 
-    /*
-        //Send message to chat if "Contact ITService" is identified -- this is here so the user gets a quick response (Prior to API calls)
-        if(actionToTake == 'Chat' || actionToTake == 'Chat with IT'){
-
-        }
-*/
-
         //Switch to catch actionToTake, Dialog will route to the correct action. 
         //Defaults to "I didnt unserstand that" if intent not identified
     
@@ -322,180 +315,10 @@ class MainDialog extends ComponentDialog {
     return await stepContext.replaceDialog(this.initialDialogId, { restartMsg: welcomeCard});
 
   }
-  /* else if(currentTime < 13.00 && currentTime > 1.00)  //Check if its within business hours
-  {
 
-    //Send Out of Business hours message and reset chat
-    const Chat2_messageText = 'I apologize, but it is currently beyond regular business hours for ITService. Please try again Mon-Fri from 5am-5pm PDT. The current time is ' + currentTime;
-    await stepContext.context.sendActivity(Chat2_messageText, Chat2_messageText, InputHints.IgnoringInput);
-    const Chat_messageText = 'Chat will restart soon.';
-    await stepContext.context.sendActivity(Chat_messageText, Chat_messageText, InputHints.IgnoringInput);
-
-    const welcomeCard = CardFactory.adaptiveCard(WelcomeCard);
-    stepContext.context.activity.value = null;
-    //Replace current dialog with welcomeCard
-    return await stepContext.replaceDialog(this.initialDialogId, { restartMsg: welcomeCard});
-
-
-  }*/
   else{
 
-    //It is within business hours if we got here
-
-/*
-    //DEPRECATING CODE 12/9/2020 -- NO ASSIGNEE
-
-
-
-//    **This is code for calling the API**
-        const GroupPromise = await getGroupData.getGroupData();  //Obtain group data from SWSD api call to an incident filter
-
-        //Log to console messages for tracking
-
-        console.log("Got group data")
-       // console.log("This is the returned promise %O", GroupPromise.data)
-
-        const processing = 'Processing...';                                                               //Send processing to user to update
-        await stepContext.context.sendActivity(processing, processing, InputHints.IgnoringInput);
-
-      //  console.log("This is the group data %O", GroupPromise.data);
-
-        const GroupData = await this.obtainAssigneeFromPromise(GroupPromise.data);                               //Obtain the value of Group data from Axios GET call promise
-
-        const RecentIncidentPromise = await getGroupData.getRecentIncident(GroupData);                      //Make Axios Get call to find most recent updated incident for Agents
-
-        const RecentIncident = await this.obtainIncidentFromPromise(RecentIncidentPromise, Agent, GroupData);   //Obtain Incident data from promise--Axios GET call of 50 recent incidents
-
-        Agent.recentUpdate = RecentIncident.recentUpdate; //Assign the Agent variable aspect "recentUpdate" as the promise value from GET call of recent incidents
-        
-        //Obtain the Day from RecentIncident date for the identified personnel
-        for(var i = 0; i<Agent.recentUpdate.length; i++){
-          if(Agent.recentUpdate[i]){
-          var day = new String();
-          day = Agent.recentUpdate[i]
-          day = day[8] + day[9];
-          console.log("THIS IS THE DAY " + day);
-          Agent.recentUpdate[i] = day;
-          }
-        }
-        
-        const activeMembers = await getGroupData.getActiveMembers(GroupData, Agent);                        //See who has updated a ticket today and who is scheduled for this time
  
-        const found = 'Agent Found...';                                                                    //Send Agent found to user to update
-        await stepContext.context.sendActivity(found, found, InputHints.IgnoringInput);
-
-           //Start loadBalancer method to get next available agent and POST incident in their queue -- returns agent data
-
-          AvailableAgent = await this.loadBalancer(activeMembers);
-
-        IncidentDetails.assignee = AvailableAgent.email;
-
-        if(!AvailableAgent.name){
-          const Chat2_messageText = 'No available Agent was found, please try again later or call 888-377-2030.\n\nRestarting Chat...';
-          await stepContext.context.sendActivity(Chat2_messageText, Chat2_messageText, InputHints.IgnoringInput);
-      
-          const welcomeCard = CardFactory.adaptiveCard(WelcomeCard);
-          stepContext.context.activity.value = null;
-      
-        //Always replace current dialog with welcomeCard
-          return await stepContext.replaceDialog(this.initialDialogId, { restartMsg: welcomeCard });
-        }else{
-
-//Make region Newport Beach if Mooney is idenfitied as the next available personnel (All others are Austin)
-
-if(AvailableAgent.name == 'Michael Mooney'){
-    AvailableAgent.region = 'Newport Beach';
-}
-
-console.log(AvailableAgent.ticketCount);    //Write ticketcount to console for tracking
-var ticketCountHolder = AvailableAgent.ticketCount;  //Not needed?
-
-//Construct adaptive card based on user values 
-
-const card = CardFactory.adaptiveCard({
-    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-  "type": "AdaptiveCard",
-  "version": "1.0",
-  "body": [
-    {
-      "type": "Container",
-      "items": [
-        {
-          "type": "ColumnSet",
-          "columns": [
-            {
-              "type": "Column",
-              "width": "auto",
-              "items": [
-                {
-                  "size": "small",
-                  "style": "person",
-                  "type": "Image",
-                  "url": `${AvailableAgent.image}`
-                }
-              ]
-            },
-            {
-              "type": "Column",
-              "width": "stretch",
-              "items": [
-                {
-                  "type": "TextBlock",
-                  "weight": "bolder",
-                  "size": "extralarge",
-                  "text":  `${AvailableAgent.name}`,
-                  "wrap": true
-                },
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "type": "Container",
-      "items": [
-        {
-          "type": "TextBlock",
-          "text": `${AvailableAgent.name}` + " has been assigned to you.\n",
-          "wrap": true
-        },
-        {
-          "type": "FactSet",
-          "facts": [
-            {
-              "title": "Title:",
-              "value": "Service Desk Analyst"
-            },
-            {
-              "title": "Region:",
-              "value": `${AvailableAgent.region}`
-            },
-            {
-              "title": "Email:",
-              "value": `${AvailableAgent.email}`
-            },
-          ]
-        }
-      ]
-    }
-  ],
-});
-const message = MessageFactory.attachment(card);
-await stepContext.context.sendActivity(message);
-
-
-
-
-//var messageText = 'Do you need immediate assistance?';
-//const msg = MessageFactory.text(`***${messageText}***`, `***${messageText}***`, InputHints.ExpectingInput);
-
-
-// Offer a YES/NO prompt.
-
-
-        }
-        */
         IncidentDetails.type = 'ChatIncident';
         return await stepContext.prompt(CONFIRM_PROMPT, { prompt: '***Do you need immediate assistance?***' });
 }
@@ -531,17 +354,6 @@ async selectStep(stepContext){
     //Begin dialog for user, await return of info from user, then make a POST API call
     return await stepContext.beginDialog('createChatIncidentDialog', IncidentDetails);
 
-    /* Deprecated code for creating Chat Incident 2/23/21
-      //CODE INSERTED 12/9/20 -- This will ensure chat tickets go to the general queue
-      AvailableAgent.email = null;
-
-
-
-     const returncode = await postChatIncident.postChatIncident(AvailableAgent.email);
-
-     //Deploy return code to ensure successful POST request
-     // console.log(returncode);
-     */
 
    } catch (error) {
        console.log(error); //Error checking on postChatIncident function call (POST AXIOS function)
@@ -643,76 +455,13 @@ console.log("This is what is in stepContext " + stepContext.result)
  
 
     }else if(IncidentDetails.type == 'ChatIncident'){
-      /*
-      try {
-          const returncode = postNewChatIncident.postNewChatIncident(result.requester, AvailableAgent.email, result.details);
-
-          await this.obtainDataFromPromise(returncode);
-
-          const msg = `Incident was successfully created and assigned.`;
-          await stepContext.context.sendActivity(msg, msg, InputHints.IgnoringInput);
-      
-      } catch (error) {
-        console.log(error);   //Error checking on postNewIncident function (AXIOS POST function)
-        const msg = `Incident was not successfully created -- please try again.`;
-        await stepContext.context.sendActivity(msg, msg, InputHints.IgnoringInput);
-    }
-    */
+ 
     }else if(result.type == 'Solution'){
       
       const msg = result.name + ` forms were sent.`;
       await stepContext.context.sendActivity(msg, msg, InputHints.IgnoringInput);
 }
-    
-/*
-*
-*
-***********DEPRECATED Luis resolving conditionals -- TODO, reinstate these
-*
-*
-*
-*/
-    /*
-    else if(result.type == 'Reassign'){
-      try {
-        
-        const returncode = updateIncident.reassignIncident(result.assignee, result.id);
-        if(returncode)
-        {
-          const msg = "Incident was successfully assigned";
-          await stepContext.context.sendActivity(msg, msg, InputHints.IgnoringInput);
-        }else{
-          const msg = result.assignee + ` incident was not successfully updated -- no 200 response`;
-          await stepContext.context.sendActivity(msg, msg, InputHints.IgnoringInput);
-        };
 
-        //Log return code for testing
-        console.log(returncode);
-
-      } catch (error) {
-          console.log(error);  //Error checking on reassignIncident function (AXIOS PUT function)
-      }
-    }else if(result.type == 'Close'){
-      try {
-        
-        const returncode = closeIncident.closeIncident(result.id);
-        if(returncode)
-        {
-          const msg = "Incident " + result.id + " was successfully closed.";
-          await stepContext.context.sendActivity(msg, msg, InputHints.IgnoringInput);
-        }else{
-          const msg = result.assignee + ` incident was not successfully updated -- no 200 response`;
-          await stepContext.context.sendActivity(msg, msg, InputHints.IgnoringInput);
-        };
-
-        //Log return code for testing
-        console.log(returncode);
-
-      } catch (error) {
-          console.log(error); //Error checking on closeIncident function (AXIOS PUT function)
-      }
-    }
-    */
 
 
     else{
@@ -734,112 +483,6 @@ console.log("This is what is in stepContext " + stepContext.result)
       return await stepContext.replaceDialog(this.initialDialogId, { restartMsg: welcomeCard });
   
     }
-
-
-
-
-    /*
-     * 
-     * 
-     * The following are functions used in the main dialog to pull promise data and perform loadbalancing
-     * 
-     *  
-     */
-
-
-//DEPRECATED 12/9/2020 - NO ASSIGNEE
-
-     /*
-    
-//Load balancer method for Chat intent
-
-async loadBalancer(ActivePersonnel){
-
-  //Declare URL and Headers for GET ChatData API call
-  const BASE_URL = "https://dprconstruction.samanage.com/incidents?report_id=9288733&applied=true&assigned_to%5B%5D=1784743&assigned_to%5B%5D=3518814&assigned_to%5B%5D=3574680&assigned_to%5B%5D=4498568&assigned_to%5B%5D=5763508&created%5B%5D=1&121985%5B%5D=Chat&sort_by=number&sort_order=DESC&per_page=100&page=1"
-  const Headers = {
-      headers: {
-      "X-Samanage-Authorization": "Bearer TOKEN",
-      "Accept": "application/json"
-     }
-  };
-
-
-  //GET Chat incident data of Service Desk Team
-
-  var ChatData = await axios.get(BASE_URL, Headers)
-  .then(response => {
-
-    //Call obtainDataFromPromise to extract the GET data
-    var retVal = this.obtainDataFromPromise(response);
-
-    //Return the resultant data and put into ChatData variable
-    return retVal;
-    }, (error) => {
-    console.log(error); //Error Checking on Axios call
-  });
-
-    //Initialize ticketCount field for Active Personnel Object
-    try {
-      for(var i=0;i < ActivePersonnel.name.length;i++){
-        ActivePersonnel.ticketCount[i] = 0;
-      }
-    } catch (error) {
-      console.log(error); //Error checking on ticketCount initialization
-    }
-
-    //For every incident found in ChatData, check if the assignee name equals an ActivePersonnel name, then append 1 to ticketCount for that personnel if found
-    for(var i=0;i < ChatData.length;i++){
-      for(var index=0;index < ActivePersonnel.name.length;index++){
-        if(ActivePersonnel.name[index] == ChatData[i].assignee.name)
-        {
-        ActivePersonnel.ticketCount[index] = ActivePersonnel.ticketCount[index] + 1;
-        console.log("Appended 1 chat incident for " + ActivePersonnel.name[index])
-        }
-      }
-    }
-
-
-          
-    //Declare placeholder for ActivePersonnel Chat Info
-    const placeholder = {};
-    placeholder.name = '';
-    placeholder.email = '';
-    placeholder.region = 'Austin';
-    placeholder.image = ActivePersonnel.image[0];
-    placeholder.name = ActivePersonnel.name[0];
-    placeholder.email = ActivePersonnel.email[0];
-    placeholder.ticketCount = ActivePersonnel.ticketCount[0];
-
-
-   //Identify which active personnel has the least number of incidents with the "Chat" origin in the last 24 hours.
-   //Then place the agents information into placeholder for use in calls and return.
-
-  for(var i=0;i < ActivePersonnel.name.length;i++){
-    if(ActivePersonnel.ticketCount[i] < placeholder.ticketCount)
-    {
-        placeholder.name = ActivePersonnel.name[i];
-        placeholder.email = ActivePersonnel.email[i];
-        placeholder.image = ActivePersonnel.image[i];
-        placeholder.ticketCount = ActivePersonnel.ticketCount[i];
-
-        console.log (placeholder.name + "Added to placeholder")
-    }
-  }
-    
-
-
-  return placeholder;
-}
-
-*/
-
-
-/*
-
-For use in obtaining data from Axios GET responses
-
-*/
 
 async obtainDataFromPromise (promise){
 
